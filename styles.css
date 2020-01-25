@@ -1,0 +1,17 @@
+.card {
+    text-align: center;
+    width: 250px;
+    margin-top: 20%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+}
+
+.content {
+    text-align: center;
+    background-color: #4c8dff;
+}
+
+.card-header {
+    font-weight: bold;
+}
