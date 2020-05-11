@@ -102,18 +102,17 @@ function cs() {
 }
 
 // Область курсора
-function cp() {
-    return area
-}
-
-// Позиция курсора
 window.addEventListener('mousemove', e => {
     var rightTop = point(e.clientX, e.clientY)
     var leftTop = point(0, e.clientY)
     var leftBottom = point(0, 0)
     var a = length(leftTop, rightTop)
     var b = length(leftBottom, leftTop)
-    area = a * b
+    var area = a * b
+ 
+    function cp() {
+        return area
+    }
 })
 
 // Длина отрезка
