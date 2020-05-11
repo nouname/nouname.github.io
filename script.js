@@ -108,6 +108,7 @@ window.onmousemove = function (e) {
     var a = length(leftTop, rightTop)
     var b = length(leftBottom, leftTop)
     area = a * b
+    console.log(area)
 }
 
 // НОД
