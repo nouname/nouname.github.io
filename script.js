@@ -75,7 +75,6 @@ function rand() {
 
 // Скорость соединения
 function cs() {
-    var speed = 0
     var img = "https://nouname.github.io/img.png"
     var dlSize = 1525
 
@@ -84,7 +83,7 @@ function cs() {
         var download = new Image()
         download.onload = function () {
             endTime = (new Date()).getTime()
-            done()
+            return done()
         }
         download.onerror = function (err, msg) {
             alert(connErr)
@@ -96,10 +95,9 @@ function cs() {
         function done() {
             var duration = (endTime - startTime) / 1000
             var loaded = dlSize * 8
-            speed = (loaded / duration).toFixed(2)
+            return (loaded / duration).toFixed(2)
         }
     }
-    return speed
 }
 
 // Область курсора
