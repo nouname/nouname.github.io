@@ -11,11 +11,11 @@ const argErr = {
     "c0LessMErr": 6
 }
 
+var c0 = rand(), a = rand(), b = rand(), area = 0
 init()
 
 // Получает параметры
 function init(err = [argErr.noErr]) {
-    var c0 = rand(), a = rand(), b = rand(), area = 0
     console.log(c0, a, b, m)
     for (var e in err) {
         switch (e) {
