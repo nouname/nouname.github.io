@@ -10,14 +10,13 @@ const argErr = {
     "bmGcdErr": 5,
     "c0LessMErr": 6
 }
-var c0 = rand(), a = rand(), b = rand(), area = 0
 
 init()
 
 // Получает параметры
 function init(err = [argErr.noErr]) {
+    var c0 = rand(), a = rand(), b = rand(), area = 0
     console.log(c0, a, b, m)
-    area = 0
     for (var e in err) {
         switch (e) {
             case argErr.bLessMErr:
@@ -102,17 +101,18 @@ function cs() {
 }
 
 // Область курсора
+function cp() {
+    return area
+}
+
+// Позиция курсора
 window.addEventListener('mousemove', e => {
     var rightTop = point(e.clientX, e.clientY)
     var leftTop = point(0, e.clientY)
     var leftBottom = point(0, 0)
     var a = length(leftTop, rightTop)
     var b = length(leftBottom, leftTop)
-    var area = a * b
- 
-    function cp() {
-        return area
-    }
+    area = a * b
 })
 
 // Длина отрезка
