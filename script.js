@@ -17,6 +17,7 @@ init()
 // Получает параметры
 function init(err = [argErr.noErr]) {
     console.log(c0, a, b, m)
+    area = 0
     for (var e in err) {
         switch (e) {
             case argErr.bLessMErr:
