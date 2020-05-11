@@ -10,7 +10,7 @@ const argErr = {
     "bmGcdErr": 5,
     "c0LessMErr": 6
 }
-var c0 = rand(), a = rand(), b = rand()
+var c0 = rand(), a = rand(), b = rand(), area = 0
 
 init()
 
@@ -104,17 +104,18 @@ function cs() {
 
 // Область курсора
 function cp() {
-    var area = 0
-    window.addEventListener('mousemove', e => {
-        var rightTop = point(e.clientX, e.clientY)
-        var leftTop = point(0, e.clientY)
-        var leftBottom = point(0, 0)
-        var a = length(leftTop, rightTop)
-        var b = length(leftBottom, leftTop)
-        area = a * b
-    })
     return area
 }
+
+// Позиция курсора
+window.addEventListener('mousemove', e => {
+    var rightTop = point(e.clientX, e.clientY)
+    var leftTop = point(0, e.clientY)
+    var leftBottom = point(0, 0)
+    var a = length(leftTop, rightTop)
+    var b = length(leftBottom, leftTop)
+    area = a * b
+})
 
 // Длина отрезка
 function length(p0, p1) {
