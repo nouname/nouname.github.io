@@ -68,9 +68,8 @@ function prngSet(range) {
 // Получает ПСЧ на основе скорости соединения и/или
 // площади прямоугольника, правый верний угол которого - координаты курсора
 function rand() {
-    console.log(cs())
     console.log(cp())
-    return cs() + cp()
+    return cp()
 }
 
 // Скорость соединения
@@ -89,12 +88,14 @@ function cp() {
 
 // Площадь
 function area() {
-    var e = window.event
-    var rightTop = point(e.clientX, e.clientY)
-    var leftTop = point(0, e.clientY)
-    var leftBottom = point(0, 0)
-    var a = length(leftTop, rightTop)
-    var b = length(leftBottom, leftTop)
+    var a = 0, b = 0
+    onmousemove = function (e) {
+        var rightTop = point(e.clientX, e.clientY)
+        var leftTop = point(0, e.clientY)
+        var leftBottom = point(0, 0)
+        a = length(leftTop, rightTop)
+        b = length(leftBottom, leftTop)
+    }
     return a * b
 }
 
