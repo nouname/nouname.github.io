@@ -1,5 +1,6 @@
 const m = Math.pow(2, 24)
 const inputErr = "Ошибка ввода"
+const connErr = "Не удалось проверить скорость соединения! Модуль может работать некорректно."
 const argErr = {
     "noErr": 0,
     "aLessMErr": 1,
@@ -9,9 +10,7 @@ const argErr = {
     "bmGcdErr": 5,
     "c0LessMErr": 6
 }
-const noInetErr = "Нет подключения к сети! Модуль может работать некорректно."
 var c0 = rand(), a = rand(), b = rand()
-var area = 0
 
 init()
 
@@ -69,24 +68,51 @@ function prngSet(range) {
 // Получает ПСЧ на основе скорости соединения и/или
 // площади прямоугольника, правый верний угол которого - координаты курсора
 function rand() {
-    console.log(cs())
-    console.log(cp())
+    console.log("cs:", cs())
+    console.log("cp:", cp())
     return cs() + cp()
 }
 
 // Скорость соединения
 function cs() {
-    var connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection
-    if (connection) {
-        console.log(connection.downlinkMax)
-        return connection.downlinkMax || connection.bandwidth
+    var speed = 0
+    var img = "https://nouname.github.io/img.png"
+    var dlSize = 1525
+
+    function conn() {
+        var startTime, endTime
+        var download = new Image()
+        download.onload = function () {
+            endTime = (new Date()).getTime()
+            done()
+        }
+        download.onerror = function (err, msg) {
+            alert(connErr)
+        }
+        startTime = (new Date()).getTime()
+        var cache = "?nnn=" + startTime
+        download.src = img + cache
+
+        function done() {
+            var duration = (endTime - startTime) / 1000
+            var loaded = dlSize * 8
+            speed = (loaded / duration).toFixed(2)
+        }
     }
-    alert(noInetErr)
-    return 0
+    return speed
 }
 
 // Область курсора
 function cp() {
+    var area = 0
+    window.addEventListener('mousemove', e => {
+        var rightTop = point(e.clientX, e.clientY)
+        var leftTop = point(0, e.clientY)
+        var leftBottom = point(0, 0)
+        var a = length(leftTop, rightTop)
+        var b = length(leftBottom, leftTop)
+        area = a * b
+    })
     return area
 }
 
@@ -99,17 +125,6 @@ function length(p0, p1) {
 function point(x, y) {
    return {"x": x, "y": y}
 }
-
-// Позиция курсора
-window.addEventListener('mousemove', e => {
-    var rightTop = point(e.clientX, e.clientY)
-    var leftTop = point(0, e.clientY)
-    var leftBottom = point(0, 0)
-    var a = length(leftTop, rightTop)
-    var b = length(leftBottom, leftTop)
-    area = a * b
-    console.log(area)
-})
 
 // НОД
 function gcd(x, y) {
