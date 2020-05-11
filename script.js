@@ -77,8 +77,10 @@ function rand() {
 // Скорость соединения
 function cs() {
     var connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection
-    if (connection)
+    if (connection) {
+        console.log(connection.downlinkMax)
         return connection.downlinkMax || connection.bandwidth
+    }
     alert(noInetErr)
     return 0
 }
