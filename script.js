@@ -101,7 +101,7 @@ function point(x, y) {
 }
 
 // Позиция курсора
-window.onmousemove = function (e) {
+window.addEventListener('mousemove', e => {
     var rightTop = point(e.clientX, e.clientY)
     var leftTop = point(0, e.clientY)
     var leftBottom = point(0, 0)
@@ -109,7 +109,7 @@ window.onmousemove = function (e) {
     var b = length(leftBottom, leftTop)
     area = a * b
     console.log(area)
-}
+})
 
 // НОД
 function gcd(x, y) {
