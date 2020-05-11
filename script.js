@@ -12,6 +12,8 @@ const argErr = {
 const noInetErr = "Нет подключения к сети! Модуль может работать некорректно."
 var c0 = rand(), a = rand(), b = rand()
 
+init()
+
 // Получает параметры
 function init(err = [argErr.noErr]) {
     for (var e in err) {
