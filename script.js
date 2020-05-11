@@ -89,6 +89,7 @@ function cp() {
 
 // Площадь
 function area() {
+    var e = window.event
     var rightTop = point(e.clientX, e.clientY)
     var leftTop = point(0, e.clientY)
     var leftBottom = point(0, 0)
