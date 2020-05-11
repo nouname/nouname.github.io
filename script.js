@@ -69,7 +69,8 @@ function prngSet(range) {
 // площади прямоугольника, правый верний угол которого - координаты курсора
 function rand() {
     console.log(cp())
-    return cp()
+    console.log(cs())
+    return cs() + cp()
 }
 
 // Скорость соединения
@@ -89,7 +90,7 @@ function cp() {
 // Площадь
 function area() {
     var a = 0, b = 0
-    onmousemove = function (e) {
+    window.onmousemove = function (e) {
         var rightTop = point(e.clientX, e.clientY)
         var leftTop = point(0, e.clientY)
         var leftBottom = point(0, 0)
