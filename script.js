@@ -11,6 +11,7 @@ const argErr = {
 }
 const noInetErr = "Нет подключения к сети! Модуль может работать некорректно."
 var c0 = rand(), a = rand(), b = rand()
+var area = 0
 
 init()
 
@@ -68,8 +69,8 @@ function prngSet(range) {
 // Получает ПСЧ на основе скорости соединения и/или
 // площади прямоугольника, правый верний угол которого - координаты курсора
 function rand() {
-    console.log(cp())
     console.log(cs())
+    console.log(cp())
     return cs() + cp()
 }
 
@@ -82,22 +83,9 @@ function cs() {
     return 0
 }
 
-// Позиция курсора
+// Область курсора
 function cp() {
-    return area()
-}
-
-// Площадь
-function area() {
-    var a = 0, b = 0
-    window.onmousemove = function (e) {
-        var rightTop = point(e.clientX, e.clientY)
-        var leftTop = point(0, e.clientY)
-        var leftBottom = point(0, 0)
-        a = length(leftTop, rightTop)
-        b = length(leftBottom, leftTop)
-    }
-    return a * b
+    return area
 }
 
 // Длина отрезка
@@ -108,6 +96,16 @@ function length(p0, p1) {
 // Точка
 function point(x, y) {
    return {"x": x, "y": y}
+}
+
+// Позиция курсора
+window.onmousemove = function (e) {
+    var rightTop = point(e.clientX, e.clientY)
+    var leftTop = point(0, e.clientY)
+    var leftBottom = point(0, 0)
+    var a = length(leftTop, rightTop)
+    var b = length(leftBottom, leftTop)
+    area = a * b
 }
 
 // НОД
