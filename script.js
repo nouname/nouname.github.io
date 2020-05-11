@@ -10,8 +10,8 @@ const argErr = {
     "bmGcdErr": 5,
     "c0LessMErr": 6
 }
-
 var c0 = rand(), a = rand(), b = rand(), area = 0
+
 init()
 
 // Получает параметры
