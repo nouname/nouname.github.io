@@ -1,23 +1,22 @@
-<html>
-    <meta charset="utf-8"/>
-    <script src="script.js"></script>
-    <body onload="init()">
-        <div style="width: 510px; padding: 20px; margin: auto; border: 1px solid black">
-            <div>
-                <div>
-                    <button style="width: 170px" onclick="getNewNum()">Новое число</button>
-                    <input id="num" width="100" contenteditable="false"/>
-                </div>
-                <br>
-                <div>
-                    <button style="width: 170px" onclick="getNums()">Множество чисел</button>
-                    <input id="len" width="100" type="number"/>
-                </div>
-                <br></br>
-                <div>
-                    <textarea id="set" style="width: 96%" contenteditable="false"></textarea>
-                </div>
-            </div>
+<html xmlns="http://www.w3.org/1999/html">
+<meta charset="utf-8"/>
+<div style="width: 510px; padding: 20px; border: 1px solid black; position:absolute;top: 30%; left: 50%; transform: translate(-50%, -30%)">
+    <div>
+        <div>
+            <button style="width: 170px" onclick="getNewNum()">Новое число</button>
+            <input id="num" width="100" readonly/>
         </div>
-    </body>
+        <br>
+        <div>
+            <button style="width: 170px" onclick="getNums()">Множество чисел</button>
+            <input id="len" width="100" type="number"/>
+        </div>
+        <br></br>
+        <div>
+            <textarea id="set" style="width: 100%; resize: vertical" readonly></textarea>
+        </div>
+    </div>
+</div>
+<script src="script.js"></script>
+</body>
 </html>
