@@ -1,102 +1,111 @@
-const m = Math.pow(2, 24)
-const inputErr = "Ошибка ввода"
-const connErr = "Не удалось проверить скорость соединения! Модуль может работать некорректно."
+// Ошибки времени выполнения
+const rtErr = {
+    "inputErr": "Ошибка ввода",
+    "connErr": "Не удалось проверить скорость соединения! Модуль может работать некорректно.",
+    "calcErr": "Ошибка при расчете значений"
+}
+
+// Ошибки аргументов
 const argErr = {
     "noErr": 0,
     "aLessMErr": 1,
     "bLessMErr": 2,
-    "bModMErr": 3,
+    "bMod2Err": 3,
     "aMod4Err": 4,
     "bmGcdErr": 5,
     "c0LessMErr": 6
 }
-var c0 = rand(), a = rand(), b = rand(), area = 0
 
-init()
+// Аргументы
+let area = 0, speed = 0, ind = 0, c = [0], a = 0, b = 0, m = Math.pow(2, 24)
 
 // Получает параметры
-function init(err = [argErr.noErr]) {
-    console.log(c0, a, b, m)
-    for (var e in err) {
-        switch (e) {
-            case argErr.bLessMErr:
-            case argErr.bModMErr:
-            case argErr.bmGcdErr:
-                b = rand()
-                break
-            case argErr.aLessMErr:
-            case argErr.aMod4Err:
-                a = rand()
-                break
-            case argErr.c0LessMErr:
-                c0 = rand()
-                break
-            case argErr.noErr:
-                break
-            default:
-                break
-        }
+async function init() {
+    a = rand(), b = rand()
+    var err = checkArgs()
+    if (err === argErr.noErr)
+        return true
+    switch (err) {
+        case argErr.bLessMErr:
+        case argErr.bMod2Err:
+        case argErr.bmGcdErr:
+            b = rand()
+        case argErr.aLessMErr:
+        case argErr.aMod4Err:
+            a = rand()
+        case argErr.c0LessMErr:
+            c[ind - 1] = rand()
+            break
+        default:
+            break
     }
+    console.log(err, a, b, c, ind)
+    return false
 }
 
 // ГПСЧ
 function prng() {
-    while (!checkArgs())
-        init()
-    c0 = (BigInt(a) * BigInt(c0) + BigInt(b)) % BigInt(m)
-    return c0
+    if (!init())
+        return rtErr.calcErr
+
+    ind++
+    c[ind] = (a * c[ind - 1] + b) % m
+    return c[ind]
 }
 
 // Множество ПСЧ
 function prngSet(range) {
-     while (!checkArgs())
-        init()
-    var data = []
-    data.push(c0)
-    for (var i = 0; i < range; i++) {
-        data.push(prng())
-        c0 = data[i]
-    }
+    if (!init())
+        return rtErr.calcErr
 
     text = ""
-    for (var item in data) {
-        text += item + "\n"
+    var data = []
+    data.push(c[ind])
+    for (var i = 0; i < range - 1; i++) {
+        data.push(prng())
+        c[ind] = data[i]
     }
+    for (i = 0; i < data.length; i++)
+        text += data[i] + "\n"
     return text
 }
 
 // Получает ПСЧ на основе скорости соединения и/или
 // площади прямоугольника, правый верний угол которого - координаты курсора
 function rand() {
-    console.log("cs:", cs())
-    console.log("cp:", cp())
-    return cs() + cp()
+    return parseInt((cs() + cp()) / 10000).toFixed(0)
 }
+
+window.addEventListener('mousedown', mouse, false)
+window.addEventListener('load', conn, false)
 
 // Скорость соединения
 function cs() {
+    return speed
+}
+
+// Соединение
+function conn() {
     var img = "https://nouname.github.io/img.png"
     var dlSize = 1525
+    var startTime, endTime
+    var download = new Image()
 
-    function conn() {
-        var startTime, endTime
-        var download = new Image()
-        download.onload = function () {
-            endTime = (new Date()).getTime()
-            return done()
-        }
-        download.onerror = function (err, msg) {
-            alert(connErr)
-        }
-        startTime = (new Date()).getTime()
-        var cache = "?nnn=" + startTime
-        download.src = img + cache
+    download.onload = function () {
+        endTime = (new Date()).getTime()
+        done()
+    }
+    download.onerror = function (err, msg) {
+        alert(rtErr.connErr)
+    }
+    startTime = (new Date()).getTime()
+    var cache = "?nnn=" + startTime
+    download.src = img + cache
 
-        function done() {
-            var duration = (endTime - startTime) / 1000
-            var loaded = dlSize * 8
-            return (loaded / duration).toFixed(2)
-        }
+    function done() {
+        var duration = (endTime - startTime) / 1000
+        var loaded = dlSize * 8
+        speed = (loaded / duration).toFixed(0)
     }
 }
 
@@ -106,14 +115,14 @@ function cp() {
 }
 
 // Позиция курсора
-window.addEventListener('mousemove', e => {
+function mouse(e) {
     var rightTop = point(e.clientX, e.clientY)
     var leftTop = point(0, e.clientY)
     var leftBottom = point(0, 0)
     var a = length(leftTop, rightTop)
     var b = length(leftBottom, leftTop)
-    area = a * b
-})
+    area = (a * b).toFixed(0)
+}
 
 // Длина отрезка
 function length(p0, p1) {
@@ -122,33 +131,32 @@ function length(p0, p1) {
 
 // Точка
 function point(x, y) {
-   return {"x": x, "y": y}
+    return {"x": x, "y": y}
 }
 
 // НОД
 function gcd(x, y) {
-    while (y !== 0) y = x % (x = y)
-    return x
+    if (!y)
+        return x
+    return gcd(y, x % y)
 }
 
 // Проверяет параметры
 function checkArgs() {
     var arr = []
     if (b % 2 === 0)
-        arr.push(argErr.bModMErr)
+        return argErr.bMod2Err
     else if (gcd(b, m) !== 1)
-        arr.push(argErr.bmGcdErr)
+        return argErr.bmGcdErr
     else if (a % 4 !== 1)
-        arr.push(argErr.aMod4Err)
+        return argErr.aMod4Err
     else if (a >= m)
-        arr.push(argErr.aLessMErr)
+        return argErr.aLessMErr
     else if (b >= m)
-        arr.push(argErr.bLessMErr)
-    else if (c0 >= m)
-        arr.push(argErr.c0LessMErr)
-    if (arr.length > 0)
-        return arr
-    return [argErr.noErr]
+        return argErr.bLessMErr
+    else if (c[0] >= m)
+        return argErr.c0LessMErr
+    return argErr.noErr
 }
 
 // Записывает новое число в поле
@@ -160,8 +168,8 @@ function getNewNum() {
 function getNums() {
     len = parseInt(document.getElementById("len").value)
     if (!Number.isInteger(len) || len < 1) {
-        document.getElementById("set").value = inputErr
+        document.getElementById("set").value = rtErr.inputErr
         return
     }
-    document.getElementById("set").innerText = prngSet(len)
+    document.getElementById("set").value = prngSet(len)
 }
