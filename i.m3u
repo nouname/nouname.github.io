@@ -1,8 +1,4 @@
 #EXTM3U
-#PLAYLIST:M3U-Karnei4
-#ICON:https://vgif.ru/gifs/154/vgif-ru-24627.gif
-#BACKGROUND-IMAGE:https://Karnei4.github.io/s/png/fon-info_optimized.jpg
-#EXTM3U url-tvg="http://www.teleguide.info/download/new3/xmltv.xml.gz,http://epg.it999.ru/edem.xml.gz" m3uautoload=1 cache=1000 aspect-ratio=16:9 deinterlace=6 tvg-shift=0
 #EXTINF:-1 tvg-logo="http://s1.iconbird.com/ico/2013/10/471/w256h2561383075027Filetypem3uicon.png",обновлен 17.07.2020г Сборка M3U-Karnei4
 https://ruvod.com/wp-content/uploads/2019/02/0CSsc2SA.mp4
 #EXTINF:-1 tvg-logo="https://cdn.discordapp.com/attachments/390472958440767488/694210449243111424/unnamed.png",IPTV-RU https://discord.gg/E7xAqsK
