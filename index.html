@@ -1,22 +1,21 @@
-<html xmlns="http://www.w3.org/1999/html">
-<meta charset="utf-8"/>
-<div style="width: 510px; padding: 20px; border: 1px solid black; position:absolute;top: 30%; left: 50%; transform: translate(-50%, -30%)">
-    <div>
-        <div>
-            <button style="width: 170px" onclick="getNewNum()">Новое число</button>
-            <input id="num" width="100" readonly/>
-        </div>
-        <br>
-        <div>
-            <button style="width: 170px" onclick="getNums()">Множество чисел</button>
-            <input id="len" width="100" type="number"/>
-        </div>
-        <br></br>
-        <div>
-            <textarea id="set" style="width: 100%; resize: vertical" readonly></textarea>
-        </div>
-    </div>
-</div>
-<script src="script.js"></script>
-</body>
+<!DOCTYPE html>
+<html>
+  <head>    
+  </head>
+  <body>
+    <input type="button" id='script' name="scriptbutton" value=" Run Script " onclick="goPython()">
+
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+    <script>
+        function goPython(){
+            $.ajax({
+              url: "start.py",
+             context: document.body
+            }).done(function() {
+             console.log('finished python script');;
+            });
+        }
+    </script>
+  </body>
 </html>
