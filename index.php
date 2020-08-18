@@ -1,4 +1,3 @@
 <?php
-//echo shell_exec("python bot/start.py");
-echo "data";
+echo shell_exec("python bot/start.py");
 ?>
