@@ -1,19 +1,7 @@
-<!DOCTYPE html>
 <html>
-  <head>    
-  </head>
-  <body>
-    <script src="jquery-3.5.1.min.js"></script>
-    <script>
-        goPython();
-        function goPython(){
-            $.ajax({
-              url: "bot/start.py",
-             context: document.body
-            }).done(function() {
-             console.log('finished python script');
-            });
-        }
-    </script>
-  </body>
-</html>
+<head>
+<title>Run bot/title>
+<?PHP
+echo shell_exec("python start.py");
+?>
+</head>
