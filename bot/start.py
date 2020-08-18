@@ -16,6 +16,8 @@ def checkSchedule(group):
     else:
         return 'Похоже, Вы ищете расписание, но такой группы нет, или произошла ошибка.'
 
+    
+print('init')
 
 vk = vk_api.VkApi(token='074f2ef61918a058d8654e2a43a4837b3b78e14f2658184dc5a9f18128796840286e7d83a63a479851dfc')
 longpoll = VkBotLongPoll(vk, '198007926')
